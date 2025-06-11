@@ -1,2 +1,0 @@
-OPENROUTER_API_KEY = "sk-or-..." 
-MODEL_NAME = "openrouter/perplexity/llama-3-sonar-large-online"
