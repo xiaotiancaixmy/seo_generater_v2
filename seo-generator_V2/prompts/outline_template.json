@@ -1,0 +1,38 @@
+{
+  "sections": [
+    {
+      "h2": "Introduction",
+      "h3": [
+        "Why It Matters"
+      ]
+    },
+    {
+      "h2": "Key Concepts",
+      "h3": [
+        "Definition",
+        "Benefits"
+      ]
+    },
+    {
+      "h2": "Step\u2011by\u2011Step Guide",
+      "h3": [
+        "Step 1",
+        "Step 2",
+        "Step 3"
+      ]
+    },
+    {
+      "h2": "Common Pitfalls",
+      "h3": [
+        "Mistake 1",
+        "Mistake 2"
+      ]
+    },
+    {
+      "h2": "Conclusion",
+      "h3": [
+        "Next Actions"
+      ]
+    }
+  ]
+}
