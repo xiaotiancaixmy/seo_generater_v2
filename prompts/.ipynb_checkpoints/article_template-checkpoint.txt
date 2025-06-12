@@ -1,0 +1,42 @@
+Create a comprehensive SEO-optimized article  (total >2,000 words) in English, written in a third-person, educational tone (not first-person or branded).
+
+The article should follow the outline {outline}”, along with relevant long-tail keywords and LSI terms.
+
+It must follow Google EEAT standards (Experience, Expertise, Authoritativeness, Trustworthiness) and be structured for maximum SEO performance.
+
+Article Structure:
+	1.	Introduction (200–250 words)
+	•	Open with a common challenge or question
+	•	Introduce the topic and its relevance
+	•	Preview the content to come
+	2.	Understanding the Core Challenges (400–450 words)
+	•	Outline 2–3 major user pain points related to the topic
+	•	Use neutral language and cite studies, use cases, or stats
+	•	Lead into the value of solutions like tool category
+	3.	Key Functionalities That Solve These Problems (400–450 words)
+	•	Cover 2–3 features commonly found in top tools
+	•	Relate each to a specific pain point
+	•	Include supporting data, quotes, or neutral evaluations
+	4.	Advanced Capabilities That Improve Workflow Efficiency (450–500 words)
+	•	Focus on innovative or AI-powered functionalities
+	•	Compare tools, workflows, or user types
+	•	Highlight how these go beyond basic solutions
+	5.	Privacy, Security, and Trust Factors (400–450 words)
+	•	Discuss industry standards for data protection
+	•	Compare tools or approaches in neutral terms
+	•	Cite authoritative sources (e.g., GDPR, NIST)
+	6.	Conclusion + Practical Tips + FAQ (500-600 words)
+	•	Summarize key points and takeaways
+	•	Offer 3–5 actionable tips or best practices
+	•	Include a short FAQ (5–7 common questions with short answers, keyword-rich)
+
+For each section, provide:
+	•	H2/H3 subheadings
+	•	Bullet points of expected content
+	•	Keyword usage recommendations (main + long-tail)
+	•	Internal and external link suggestions (authoritative sites)
+
+Output Format: Markdown
+Also include at the end:
+	•	A keyword-rich meta description (max 160 characters)
+	•	A suggested URL slug (in English)

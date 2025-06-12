@@ -1,0 +1,25 @@
+Generate a structured outline for a long-form SEO article (~2,000 words) in English, targeting the primary keyword: ”{keyword}”.
+
+Requirements:
+	•	The outline should follow Google EEAT (Experience, Expertise, Authoritativeness, Trustworthiness) principles.
+	•	Structure the article into 6 main sections, each with word count estimates:
+	1.	Introduction (200–250 words)
+	2.	Understanding User Pain Points (400–450 words)
+	3.	Core Features That Solve These Pain Points (400–450 words)
+	4.	Advanced Features to Improve Productivity (450–500 words)
+	5.	Privacy & Security Advantages (400–450 words)
+	6.	Practical Tips + Conclusion + FAQ (150–200 words for conclusion, 200–250 for FAQ)
+
+For each section, include:
+	•	H2 + H3 headings
+	•	Bullet points describing what content should go under each
+	•	Suggestions for where to insert:
+	•	Primary keyword and long-tail variations
+	•	Internal links and authoritative external links
+	•	Real-world examples, user quotes, or stats
+
+Additionally provide at the end:
+	•	A meta description (max 160 characters) using the main keyword
+	•	A suggested URL slug (in lowercase English)
+
+Format the outline in Markdown for clarity.

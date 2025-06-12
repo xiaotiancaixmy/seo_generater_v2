@@ -1,0 +1,26 @@
+Generate a clear and concise SEO-optimized title for the article based on the topic and keyword.
+
+Create a comprehensive SEO-optimized article (total >2,000 words) in English, written in a third-person, educational tone (not first-person or branded).
+
+Topic: {{ title }}
+Primary Keyword: {{ main_keyword }}
+
+The article should directly address the topic above, and for each section in the outline, generate a unique and relevant section heading instead of copying the outline title directly:
+{{ outline }}
+
+Requirements:
+- Follow Google EEAT standards (Experience, Expertise, Authoritativeness, Trustworthiness)
+- Include relevant long-tail keywords and LSI terms related to "{{ main_keyword }}"
+- Structure the content for maximum SEO performance
+- The article must be at least 1,500 words long. If needed, expand existing sections with more details, examples, or references to meet this minimum word count requirement.
+
+Do not add explicit H2/H3 tags before each section. Instead, use clear section headers in plain text.
+- Bullet points of expected content (as needed)
+- Use of main and long-tail keywords
+- Internal links (to other sections or relevant tools)
+- External links to authoritative sources (e.g., studies, documentation, industry sites)
+
+Output Format: HTML
+
+Also include at the end:
+- A keyword-rich meta description (max 160 characters)

@@ -5,6 +5,7 @@ from jinja2 import Template
 from openai import OpenAI
 from config import OPENROUTER_API_KEY, MODEL_NAME
 
+
 client = OpenAI(api_key=OPENROUTER_API_KEY, base_url="https://openrouter.ai/api/v1")
 
 DATA_FILE = "data/titles.csv"
@@ -12,6 +13,7 @@ OUTLINE_TEMPLATE = "prompts/outline_template.txt"
 ARTICLE_TEMPLATE = "prompts/seo_template.txt"
 OUTPUT_DIR = "outputs"
 
+print("KEY LEN:", len(OPENROUTER_API_KEY))
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def load_titles():

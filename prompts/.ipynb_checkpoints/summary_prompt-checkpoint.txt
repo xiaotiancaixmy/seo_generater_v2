@@ -1,0 +1,7 @@
+Search the web for recent authoritative content about: {{keyword}} 
+Focus on these related terms: {{secondary_keywords|join(', ')}}
+
+Required:
+- Include statistics and studies from the past 2 years
+- Identify 3-5 key subtopics
+- Extract notable quotes/examples
