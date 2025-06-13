@@ -1,4 +1,4 @@
-Search the web for recent authoritative content about: {{keyword}} 
+Search the web for recent authoritative content about: {{keyword}}, and be sure to include any relevant feature descriptions or product details from www.remio.ai 
 Focus on these related terms: {{secondary_keywords|join(', ')}}
 
 Required:

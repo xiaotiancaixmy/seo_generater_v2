@@ -53,18 +53,53 @@ def generate_outline(summary: str, keyword: str) -> str:
         template = Template(f.read())
     prompt = template.render(summary=summary, keyword=keyword)
     return chat(prompt, temperature=0.3)
-def generate_article(title: str, keyword: str, outline: str, summary: str) -> str:
-    with open(ARTICLE_TEMPLATE, encoding='utf-8') as f:
+
+def first_draft_article(title: str, keyword: str, outline: str, summary: str) -> str:
+    """生成文章初稿"""
+    with open(ARTICLE_TEMPLATE, encoding="utf-8") as f:
         template = Template(f.read())
-    prompt = template.render(title=title, main_keyword=keyword, outline=outline, search_summary=summary)
-    response = client.chat.completions.create(
-        model=MODEL_NAME,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.7
+    prompt = template.render(
+        title=title,
+        main_keyword=keyword,
+        outline=outline,
+        search_summary=summary
     )
-    return response.choices[0].message.content
+    return chat(prompt, temperature=0.7)
+
+def expand_section(section: str, target_words: int) -> str:
+    """扩写特定段落"""
+    prompt = f"""
+    Expand the following section to approximately {target_words} words while maintaining its original meaning and structure:
+    
+    {section}
+    
+    Requirements:
+    - Keep the same tone and style
+    - Add relevant examples and details
+    - Maintain paragraph structure
+    - Ensure natural flow
+    """
+    return chat(prompt, temperature=0.7)
+
+def ensure_faq_section(article: str) -> str:
+    """确保文章包含FAQ部分"""
+    if "FAQ" not in article and "Frequently Asked Questions" not in article:
+        prompt = f"""
+        Add a comprehensive FAQ section to this article with 5-7 common questions and detailed answers:
+        
+        {article}
+        
+        Requirements:
+        - Add 5-7 relevant questions
+        - Provide detailed, helpful answers
+        - Use natural language
+        - Include examples where appropriate
+        """
+        return chat(prompt, temperature=0.7)
+    return article
 
 def save_article(article_id: str, content: str):
+    """保存文章到文件"""
     path = os.path.join(OUTPUT_DIR, f"article-{article_id.zfill(3)}.md")
     with open(path, "w", encoding='utf-8') as f:
         f.write(content)
@@ -72,20 +107,38 @@ def save_article(article_id: str, content: str):
 def main():
     rows = load_titles()
     for idx, row in enumerate(rows, start=1):
-        article_id = str(idx)  # ✅ 添加这个唯一 ID
+        article_id = str(idx)
         keyword = get_main_keyword(row)
         print(f"\n🔍 Processing: {row['title']}")
         
+        # 1. 生成摘要和提纲
         summary = web_search_summary(keyword)
         print(f"the keyword is {keyword}")
         print("✅ Summary done.")
         
         outline = generate_outline(summary, keyword)
+        print(f"the outline is {outline}")
         print("✅ Outline generated.")
         
-        article = generate_article(row['title'], keyword, outline, summary)
+        # 2. 生成初稿
+        article = first_draft_article(row['title'], keyword, outline, summary)
+        print(f"   ↳ Draft length: {len(article.split())} words")
+        
+        # 3. 确保文章长度
+        while len(article.split()) < TARGET_WORDS:
+            # 分析文章结构，找出最短的部分进行扩写
+            sections = article.split('\n\n')
+            shortest_section = min(sections, key=lambda x: len(x.split()))
+            expanded_section = expand_section(shortest_section, 300)
+            article = article.replace(shortest_section, expanded_section)
+            print(f"   ↳ Extended to {len(article.split())} words")
+        
+        # 4. 确保包含FAQ部分
+        article = ensure_faq_section(article)
+        print("✅ FAQ section added/verified")
+        
+        # 5. 保存文章
         save_article(article_id, article)
-        print(f"length: {len(article.split())} words")
         print(f"✅ Article saved to outputs/article-{article_id.zfill(3)}.md")
 
 if __name__ == "__main__":

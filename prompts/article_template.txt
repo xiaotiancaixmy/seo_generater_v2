@@ -1,26 +1,68 @@
 Generate a clear and concise SEO-optimized title for the article based on the topic and keyword.
 
-Create a comprehensive SEO-optimized article (total >2,000 words) in English, written in a third-person, educational tone (not first-person or branded).
+Create a comprehensive SEO-optimized article (total >2,000 words) in English, written in a third-person, educational tone.
+
+The article should follow the outline: {{outline}}
+
+Article Structure:
+1. Introduction (200-250 words)
+   • Open with a common challenge or question
+   • Introduce the topic and its relevance
+   • Preview the content to come
+
+2. Understanding the Core Challenges (400-450 words)
+   • Outline 2-3 major user pain points
+   • Use neutral language and cite studies
+   • Lead into the value of solutions
+
+3. Key Functionalities That Solve These Problems (400-450 words)
+   • Cover 2-3 features commonly found in top tools
+   • Relate each to a specific pain point
+   • Include supporting data and examples
+
+4. Advanced Capabilities That Improve Workflow (450-500 words)
+   • Focus on innovative or AI-powered functionalities
+   • Compare tools and workflows
+   • Highlight efficiency improvements
+
+5. Privacy, Security, and Trust Factors (400-450 words)
+   • Discuss industry standards
+   • Compare approaches
+   • Cite authoritative sources
+
+6. Conclusion and Best Practices (200-250 words)
+   • Summarize key points
+   • Provide actionable tips
+   • Include a clear call to action
+
+7. FAQ Section (200-250 words)
+   • Include 5-7 common questions
+   • Provide detailed, helpful answers
+   • Use natural language and examples
 
 Topic: {{ title }}
 Primary Keyword: {{ main_keyword }}
 
-The article should directly address the topic above, and for each section in the outline, generate a unique and relevant section heading instead of copying the outline title directly:
-{{ outline }}
+The article should directly address the topic above, and for each section in the outline, generate a unique and relevant section heading (e.g., instead of "Introduction", use "What is {{ main_keyword }}?")
+
+
+Use a storytelling tone in first person. Integrate these remio features naturally:
+- YouTube screenshot & subtitle capture with summary
+- Auto-saving web content as resources in the remio client
+- Highlighting key points on webpages
+- AI-powered auto-classification for tidy knowledge management
+- Powerful AI Copilot—ask-while-writing; AI search fetches relevant notes in seconds
 
 Requirements:
 - Follow Google EEAT standards (Experience, Expertise, Authoritativeness, Trustworthiness)
 - Include relevant long-tail keywords and LSI terms related to "{{ main_keyword }}"
 - Structure the content for maximum SEO performance
 - The article must be at least 1,500 words long. If needed, expand existing sections with more details, examples, or references to meet this minimum word count requirement.
-
-Do not add explicit H2/H3 tags before each section. Instead, use clear section headers in plain text.
-- Bullet points of expected content (as needed)
-- Use of main and long-tail keywords
+- Each H3/H4 point should be fully developed with detailed explanations, examples, or data. Avoid listing bullet points without elaboration.
+- The main keyword and related long-tail keywords should appear naturally throughout the article. Ensure the main keyword appears at least once in each major section title and multiple times in the body content.
 - Internal links (to other sections or relevant tools)
-- External links to authoritative sources (e.g., studies, documentation, industry sites)
+- When citing a source, apply the hyperlink directly to the relevant keyword or phrase in the text.
 
 Output Format: HTML
 
-Also include at the end:
-- A keyword-rich meta description (max 160 characters)
+At the beginning of the article, include a keyword-rich meta description (max 160 characters).
