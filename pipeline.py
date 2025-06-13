@@ -5,6 +5,9 @@ from openai import OpenAI
 from config import OPENROUTER_API_KEY, MODEL_NAME
 import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
+from collections import Counter
+import re
+
 # ────── 初始化 OpenRouter 客户端 ──────
 client = OpenAI(
     api_key=OPENROUTER_API_KEY,
@@ -18,6 +21,7 @@ ARTICLE_TEMPLATE = "prompts/article_template.txt"
 OUTPUT_DIR = "outputs"
 TARGET_WORDS = 2000
 MAX_TOKENS = 5000
+SIMILARITY_THRESHOLD = 0.8  # 相似度阈值
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -45,7 +49,22 @@ def get_main_keyword(title_row: dict) -> str:
     return title_row.get('key_words', '').strip().lower()
 
 def web_search_summary(keyword: str) -> str:
-    prompt = f"Search the web and summarize recent content related to: {keyword}"
+    prompt = f"""Search the web and provide a comprehensive summary of recent content related to: {keyword}
+
+Requirements:
+1. First list the top 3-5 most relevant web sources you found
+2. Then provide a detailed summary of the information from these sources
+3. Include key statistics, trends, and insights
+4. Focus on recent and authoritative information
+5. Format the output as follows:
+
+SOURCES:
+- [Source 1]
+- [Source 2]
+- [Source 3]
+
+SUMMARY:
+[Your detailed summary here]"""
     return chat(prompt, temperature=0.3)
 
 def generate_outline(summary: str, keyword: str) -> str:
@@ -53,6 +72,63 @@ def generate_outline(summary: str, keyword: str) -> str:
         template = Template(f.read())
     prompt = template.render(summary=summary, keyword=keyword)
     return chat(prompt, temperature=0.3)
+
+def check_content_duplication(text: str) -> tuple[bool, list[str]]:
+    """检查内容重复
+    返回: (是否有重复, 重复内容列表)
+    """
+    # 将文本分成段落
+    paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
+    
+    # 检查段落级别的重复
+    duplicates = []
+    for i, p1 in enumerate(paragraphs):
+        for j, p2 in enumerate(paragraphs[i+1:], i+1):
+            # 计算两个段落的相似度
+            similarity = calculate_similarity(p1, p2)
+            if similarity > SIMILARITY_THRESHOLD:
+                duplicates.append(f"段落 {i+1} 和 {j+1} 相似度: {similarity:.2f}")
+    
+    return len(duplicates) > 0, duplicates
+
+def calculate_similarity(text1: str, text2: str) -> float:
+    """计算两段文本的相似度"""
+    # 使用简单的词频比较
+    words1 = set(re.findall(r'\w+', text1.lower()))
+    words2 = set(re.findall(r'\w+', text2.lower()))
+    
+    if not words1 or not words2:
+        return 0.0
+    
+    intersection = words1.intersection(words2)
+    union = words1.union(words2)
+    
+    return len(intersection) / len(union)
+
+def optimize_content(text: str) -> str:
+    """优化内容，去除重复并重写"""
+    has_duplicates, duplicates = check_content_duplication(text)
+    
+    if has_duplicates:
+        print("⚠️ 检测到内容重复，正在优化...")
+        prompt = f"""
+        以下文章存在内容重复，请重写以消除重复，同时保持文章的整体结构和质量：
+        
+        {text}
+        
+        重复内容：
+        {chr(10).join(duplicates)}
+        
+        要求：
+        1. 保持文章的主要观点和信息
+        2. 使用不同的表达方式重写重复的部分
+        3. 确保文章流畅自然
+        4. 保持原有的段落结构
+        5. 不要改变文章的主题和目的
+        """
+        return chat(prompt, temperature=0.7)
+    
+    return text
 
 def first_draft_article(title: str, keyword: str, outline: str, summary: str) -> str:
     """生成文章初稿"""
@@ -78,6 +154,7 @@ def expand_section(section: str, target_words: int) -> str:
     - Add relevant examples and details
     - Maintain paragraph structure
     - Ensure natural flow
+    - Avoid repeating information
     """
     return chat(prompt, temperature=0.7)
 
@@ -94,6 +171,7 @@ def ensure_faq_section(article: str) -> str:
         - Provide detailed, helpful answers
         - Use natural language
         - Include examples where appropriate
+        - Ensure questions are unique and not repetitive
         """
         return chat(prompt, temperature=0.7)
     return article
@@ -137,7 +215,11 @@ def main():
         article = ensure_faq_section(article)
         print("✅ FAQ section added/verified")
         
-        # 5. 保存文章
+        # 5. 检查并优化重复内容
+        article = optimize_content(article)
+        print("✅ Content optimized")
+        
+        # 6. 保存文章
         save_article(article_id, article)
         print(f"✅ Article saved to outputs/article-{article_id.zfill(3)}.md")
 
